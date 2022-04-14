@@ -44,32 +44,34 @@ In the execution above the **accounts.yaml** and **policy.yaml** are located in 
 
 Our accounts.yaml file contains this content:
 
-    accounts:
-        - account_id: '472510080448'
-          name: us-shared
-          regions:
-          - us-east-1
-          role: arn:aws:iam::472510080448:role/sre-ec2-role-assumed
-        - account_id: '995437807815'
-          name: us-dev
-          regions:
-          - us-east-1
-          role: arn:aws:iam::995437807815:role/sre-ec2-role-assumed
-        - account_id: '300899438431'
-          name: us-test
-          regions:
-          - us-east-1
-          role: arn:aws:iam::300899438431:role/sre-ec2-role-assumed
-        - account_id: '122639376858'
-          name: us-prod
-          regions:
-          - us-east-1
-          role: arn:aws:iam::122639376858:role/sre-ec2-role-assumed
-        - account_id: '172507017890'
-          name: ca-prod
-          regions:
-          - ca-central-1
-          role: arn:aws:iam::172507017890:role/sre-ec2-role-assumed
+```
+accounts:
+    - account_id: '472510080448'
+      name: us-shared
+      regions:
+      - us-east-1
+      role: arn:aws:iam::472510080448:role/sre-ec2-role-assumed
+    - account_id: '995437807815'
+      name: us-dev
+      regions:
+      - us-east-1
+      role: arn:aws:iam::995437807815:role/sre-ec2-role-assumed
+    - account_id: '300899438431'
+      name: us-test
+      regions:
+      - us-east-1
+      role: arn:aws:iam::300899438431:role/sre-ec2-role-assumed
+    - account_id: '122639376858'
+      name: us-prod
+      regions:
+      - us-east-1
+      role: arn:aws:iam::122639376858:role/sre-ec2-role-assumed
+    - account_id: '172507017890'
+      name: ca-prod
+      regions:
+      - ca-central-1
+      role: arn:aws:iam::172507017890:role/sre-ec2-role-assumed
+```
 
 A policy file will have a format like:
 
