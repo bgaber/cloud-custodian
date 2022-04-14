@@ -73,14 +73,16 @@ Our accounts.yaml file contains this content:
 
 A policy file will have a format like:
 
-    policies:
-    - name: a-name-you-create
-      resource: actual resource name from cc documentation
-      description: Some relevant description
-      filters:
-        - type: a type from cc resource documentation
-      actions:
-        - type: a type from cc resource documentation
+```
+policies:
+- name: a-name-you-create
+  resource: actual resource name from cc documentation
+  description: Some relevant description
+  filters:
+    - type: a type from cc resource documentation
+  actions:
+    - type: a type from cc resource documentation
+```
 
 Here is an example of a real policy file that removes some unused Security Group rules, adds one new rule and sends an email notification of all the Security Groups that were modified:
 
