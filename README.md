@@ -1,7 +1,7 @@
-[Link](https://cloudcustodian.io/docs/index.html "Cloud Custodian Documentation — Cloud Custodian  documentation")
-[Link](https://cloudcustodian.io/ "Cloud Custodian")
-[Link](https://gitter.im/cloud-custodian/cloud-custodian "cloud-custodian/cloud-custodian")
-[Link](https://medium.com/manomano-tech/cloud-custodian-overview-and-deployment-of-cloud-governance-d8e468fb4ab4 "Cloud Custodian — Overview and deployment of cloud governance")
+[Cloud Custodian Documentation — Cloud Custodian  documentation](https://cloudcustodian.io/docs/index.html)
+[Cloud Custodian](https://cloudcustodian.io/)
+[cloud-custodian/cloud-custodian](https://gitter.im/cloud-custodian/cloud-custodian)
+[Cloud Custodian — Overview and deployment of cloud governance](https://medium.com/manomano-tech/cloud-custodian-overview-and-deployment-of-cloud-governance-d8e468fb4ab4)
 
 Cloud Custodian is a tool that unifies the dozens of tools and scripts most organizations use for managing their public cloud accounts into one open source tool. It uses a stateless rules engine for policy definition and enforcement, with metrics, structured outputs and detailed reporting for clouds infrastructure. It integrates tightly with serverless runtimes to provide real time remediation/response with low operational overhead.
 
@@ -67,8 +67,6 @@ Our accounts.yaml file contains this content:
           regions:
           - ca-central-1
           role: arn:aws:iam::172507017890:role/sre-ec2-role-assumed
-
-
 
 A policy file will have a format like:
 
