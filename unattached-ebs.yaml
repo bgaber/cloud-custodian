@@ -1,0 +1,21 @@
+policies:
+  - name: unattachedvols
+    resource: ebs
+    filters:
+      - State: available
+    actions:
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: 1
+        subject: "{{ account }} - Unattached EBS Volumes"
+        violation_desc: "These EBS Volumes are not attached to any EC2 Instance:"
+        action_desc: |
+            "Actions Taken: Recommend Delete.
+            The listed EBS Volumes are unused and, therefore, should be deleted."
+        to:
+          - brian.gaber@compucom.com
+        transport:
+            type: sqs
+            queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+            region: us-east-1

@@ -1,0 +1,22 @@
+policies:
+- name: mcafee-security-rules-rm-add
+  resource: security-group
+  description: Remove unused McAfee Security Group rules and add one new rule
+  filters:
+    - or:
+      - type: ingress
+        Ports: [445, 8085]
+        Cidr:  "10.16.10.174/32"
+      - type: ingress
+        Ports: [445, 8085]
+        Cidr: "10.17.2.183/32"
+      - type: ingress
+        Ports: [445, 8085]
+        Cidr: "10.17.2.182/32"
+      - type: ingress
+        Ports: [445, 8085]
+        Cidr: "10.17.2.180/32"
+  actions:
+    - type: set-permissions
+      # remove the permission matched by a previous ingress filter.
+      remove-ingress: matched

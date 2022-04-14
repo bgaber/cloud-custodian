@@ -1,0 +1,21 @@
+policies:
+- name: mcafee-security-groups
+  resource: security-group
+  filters:
+    - or:
+      - type: ingress
+        Ports: [445, 8085]
+        Cidr:
+          value: "10.16.10.174/32"
+      - type: ingress
+        Ports: [445, 8085]
+        Cidr:
+          value: "10.17.2.183/32"
+      - type: ingress
+        Ports: [445, 8085]
+        Cidr:
+          value: "10.17.2.182/32"
+      - type: ingress
+        Ports: [445, 8085]
+        Cidr:
+          value: "10.17.2.180/32"

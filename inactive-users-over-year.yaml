@@ -1,0 +1,22 @@
+policies:
+- name: users-unused-over-year
+  resource: iam-user
+  filters:
+    - type: usage
+      LastAuthenticated:
+        type: value
+        value_type: age
+        op: greater-than
+        value: 365
+      match-operator: any
+  actions:
+    - type: notify
+      template: default.html
+      template_format: html
+      priority_header: '1'
+      subject: "{{ account }} iam users that have not used any services in over a year"
+      to:
+        - brian.gaber@compucom.com
+      transport:
+        type: sqs
+        queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian

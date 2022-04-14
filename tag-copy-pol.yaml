@@ -1,0 +1,14 @@
+policies:
+- name: copy-tags-from-ec2-to-ebs-volume
+  description: |
+    Copy EC2 instance tags to EBS volumes
+  resource: ebs
+  filters:
+    - type: value
+      key: "Attachments[].Device"
+      value: not-null
+  actions:
+    - type: copy-instance-tags
+      tags:
+        - Owner
+        - Application

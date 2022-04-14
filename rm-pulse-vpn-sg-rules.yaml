@@ -1,0 +1,22 @@
+policies:
+  - name: rm-pulse-vpn-sec-gp-rules
+    resource: security-group
+    description: |
+      Remove Pulse VPN Security Group rules
+    filters:
+      - type: ingress
+        IpProtocol: tcp
+        Cidr: "10.98.0.0/15"
+    actions:
+      - type: remove-permissions
+        ingress: matched
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        subject: "{{ account }} Pulse Security Group Rule Deletion"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian

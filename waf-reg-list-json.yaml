@@ -1,0 +1,3 @@
+policies:
+- name: wafreglistjson
+  resource: waf-regional

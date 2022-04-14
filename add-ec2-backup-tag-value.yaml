@@ -1,0 +1,26 @@
+policies:
+  - name: ec2-add-backup-tag
+    resource: ec2
+    filters:
+      - type: value
+        key: tag:Name
+        op: regex
+        value: 'STLAWSFRK22\w+'
+    actions:
+      - type: tag
+        key: cpm backup
+        value: FRK_USTEST_POLICY_EC2_7DAILY
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: 1
+        subject: "{{ account }} - Added CPM Backup Tag Value"
+        violation_desc: "These EC2 Instance have had a cpm backup tag added"
+        action_desc: |
+            "These EC2 Instance have had a cpm backup tag added."
+        to:
+          - brian.gaber@compucom.com
+        transport:
+            type: sqs
+            queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+            region: us-east-1

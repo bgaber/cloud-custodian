@@ -1,0 +1,7 @@
+policies:
+  - name: instances with a specific tag
+    resource: ec2
+    description:  |
+      Find instances with tag of custodian_downtime
+    filters:
+      - "tag:custodian_downtime": present

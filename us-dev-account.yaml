@@ -1,0 +1,6 @@
+accounts:
+    - account_id: '995437807815'
+      name: us-dev
+      regions:
+      - us-east-1
+      role: arn:aws:iam::995437807815:role/sre-ec2-role-assumed

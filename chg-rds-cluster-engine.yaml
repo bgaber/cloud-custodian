@@ -1,0 +1,13 @@
+policies:
+- name: chg-rds-cluster-engine
+  resource: rds-cluster
+  filters:
+      - type: value
+        key: EngineVersion
+        value: "5.6.mysql_aurora.1.22.2"
+        op: eq
+  actions:
+    - type: modify-db-cluster
+      attributes:
+          ApplyImmediately: true
+          EngineVersion: "5.6.mysql_aurora.1.23.1"

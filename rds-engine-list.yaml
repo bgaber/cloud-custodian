@@ -1,0 +1,19 @@
+policies:
+- name: rds-engine-list
+  resource: rds
+  filters:
+      - type: value
+        key: EngineVersion
+        value: "5.6.mysql_aurora.1.22.2"
+        op: eq
+  actions:
+    - type: notify
+      template: default.html
+      template_format: html
+      priority_header: '1'
+      subject: "{{ account }} RDS with Engine Version of 5.6.mysql_aurora.1.22.2"
+      to:
+        - brian.gaber@compucom.com
+      transport:
+        type: sqs
+        queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian

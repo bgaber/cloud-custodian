@@ -1,0 +1,17 @@
+policies:
+  - name: s3-PutBucketCors-change-tag
+    resource: s3
+    description: |
+      This policy is triggered on the S3 PutBucketCors event
+    mode:
+      type: cloudtrail
+      events:
+        - source: 's3.amazonaws.com'
+          event: PutBucketCors
+          ids: "requestParameters.bucketName"
+    actions:
+      - type: auto-tag-user
+        tag: WhoPutBucketCors
+      - type: tag
+        tag: WhenPutBucketCors
+        value: "{{now}}"

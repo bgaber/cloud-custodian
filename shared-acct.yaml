@@ -1,0 +1,6 @@
+accounts:
+    - account_id: '472510080448'
+      name: us-shared
+      regions:
+      - us-east-1
+      role: arn:aws:iam::472510080448:role/sre-ec2-role-assumed

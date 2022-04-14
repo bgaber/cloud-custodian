@@ -1,0 +1,23 @@
+policies:
+  - name: clb-replace-owner-tag-value
+    resource: elb
+    filters:
+      - "tag:Owner": Christohper Marshall
+    actions:
+      - type: tag
+        key: Owner
+        value: Christopher Marshall
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: 1
+        subject: "{{ account }} - Replaced Owner Tag Value"
+        violation_desc: "These CLBs have had their Owner tag changed"
+        action_desc: |
+            "These CLBs have had their Owner tag changed from Christohper Marshall to Christopher Marshall."
+        to:
+          - brian.gaber@compucom.com
+        transport:
+            type: sqs
+            queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+            region: us-east-1

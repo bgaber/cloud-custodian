@@ -1,0 +1,20 @@
+policies:
+- name: ami-cloudengineering
+  resource: ami
+  description: |
+    Reduce the number of Cloud Engineering AMIs
+  mode:
+  type: periodic
+  schedule: cron(30 7 * * ? *)
+  role: "arn:aws:iam::{account_id}:role/cloud-custodian-lambda"
+  function-prefix: "{account_name}_custodian_"
+  tags:
+  "mp:owner": CloudEngineering
+  filters:
+  - and:
+  - type: unused
+  value: true
+  - type: image-age
+  days: 30
+  actions:
+  - type: deregister

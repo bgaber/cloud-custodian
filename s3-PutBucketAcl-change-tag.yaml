@@ -1,0 +1,17 @@
+policies:
+  - name: s3-PutBucketAcl-change-tag
+    resource: s3
+    description: |
+      This policy is triggered on the S3 PutBucketAcl event
+    mode:
+      type: cloudtrail
+      events:
+        - source: 's3.amazonaws.com'
+          event: PutBucketAcl
+          ids: "requestParameters.bucketName"
+    actions:
+      - type: auto-tag-user
+        tag: WhoPutBucketAcl
+      - type: tag
+        tag: WhenPutBucketAcl
+        value: "{{now}}"

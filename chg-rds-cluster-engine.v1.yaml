@@ -1,0 +1,26 @@
+policies:
+- name: chg-rds-cluster-engine
+  resource: rds-cluster
+  filters:
+      - type: value
+        key: EngineVersion
+        value: "5.6.mysql_aurora.1.22.2"
+        op: eq
+  actions:
+    - type: modify-db-cluster
+      attributes:
+          EngineVersion: 5.6.mysql_aurora.1.23.1
+      immediate: true
+    - type: notify
+      template: default.html
+      template_format: html
+      priority_header: '1'
+      subject: "{{ account }} RDS with Engine Version of 5.6.mysql_aurora.1.22.2 changed to 5.6.mysql_aurora.1.23.1"
+      violation_desc: "These RDS DBs have had their Engine Version changed to 5.6.mysql_aurora.1.23.1"
+      action_desc: |
+          "These RDS DBs have had their Engine Version changed to 5.6.mysql_aurora.1.23.1."
+      to:
+        - brian.gaber@compucom.com
+      transport:
+        type: sqs
+        queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian

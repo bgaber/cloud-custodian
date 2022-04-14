@@ -1,0 +1,37 @@
+vars:
+  metrics-filters: &metrics-filter
+        type: metrics
+        name: DatabaseConnections
+        days: 180
+        value: 0
+        op: equal
+
+policies:
+  - name: rds-unused-databases-notify
+    resource: rds
+    description: |
+      Take the average number of connections over 180 days for databases that are greater than 180
+      days old.
+    filters:
+      - type: value
+        value_type: age
+        key: InstanceCreateTime
+        value: 180
+        op: greater-than
+      - <<: *metrics-filter
+    actions:
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: 1
+        subject: "{{ account }} Unused RDS Databases"
+        violation_desc: "These RDS Instances have had no connections in the last 6 months and are, therefore, considered unused:"
+        action_desc: |
+            "Actions Taken:  None.
+            At this point we are just notifying you of the unused RDS databases."
+        to:
+          - brian.gaber@compucom.com
+        transport:
+            type: sqs
+            queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+            region: us-east-1

@@ -1,0 +1,6 @@
+accounts:
+    - account_id: '655690556973'
+      name: sandbox
+      regions:
+      - us-east-1
+      role: arn:aws:iam::655690556973:role/sre-ec2-role-assumed

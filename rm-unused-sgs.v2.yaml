@@ -1,0 +1,23 @@
+policies:
+  - name: rm-unused-security-groups-08mar2022
+    resource: security-group
+    description: |
+      Delete unused security groups
+    filters:
+      - unused 
+    actions:
+      - delete
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        subject: '{{ account }} Deleted Unused Security Groups'
+        violation_desc: "These Security Groups have been deleted because they were not used by any AWS resource:"
+        action_desc: |
+            "Actions Taken:  None.
+            The listed Security Groups were unused and, therefore, were deleted."
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian

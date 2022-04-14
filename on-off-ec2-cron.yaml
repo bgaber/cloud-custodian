@@ -1,0 +1,26 @@
+policies:
+  - name: off-ec2-cron
+    resource: ec2
+    filters:
+      - type: offhour
+        tag: custodian_downtime
+        default_tz: et
+        offhour: 19
+    mode:
+      type: periodic
+      schedule: "rate(1 hour)"
+    actions:
+      - stop
+      
+  - name: on-ec2-cron
+    resource: ec2
+    filters:
+      - type: onhour
+        tag: custodian_downtime
+        default_tz: et
+        onhour: 7
+    mode:
+      type: periodic
+      schedule: "rate(1 hour)"
+    actions:
+      - start

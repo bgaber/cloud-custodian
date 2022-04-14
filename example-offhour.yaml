@@ -1,0 +1,19 @@
+policies:
+- name: ec2-off-hours-stop
+  resource: ec2
+  comments: |
+    This is a cost saving "action" policy. 
+    The policy will apply only to those EC2 instances that include the tag "c7n_off_hours".
+    Stop EC2 instances as per schedule in c7n_off_hours that is 0 UTC = 6PM CST.
+  filters:
+      - type: offhour
+        tag: custodian_downtime
+        default_tz: et
+        offhour: 14
+  mode:
+      schedule: "rate(xx minutes)"
+      type: periodic
+      execution-options:
+        output_dir: s3://X/X/X/X/X/X/
+  actions:
+    - stop

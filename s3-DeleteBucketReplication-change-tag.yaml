@@ -1,0 +1,17 @@
+policies:
+  - name: s3-DeleteBucketReplication-change-tag
+    resource: s3
+    description: |
+      This policy is triggered on the S3 DeleteBucketReplication event
+    mode:
+      type: cloudtrail
+      events:
+        - source: 's3.amazonaws.com'
+          event: DeleteBucketReplication
+          ids: "requestParameters.bucketName"
+    actions:
+      - type: auto-tag-user
+        tag: WhoDeleteBucketReplication
+      - type: tag
+        tag: WhenDeleteBucketReplication
+        value: "{{now}}"

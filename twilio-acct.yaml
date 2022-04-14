@@ -1,0 +1,6 @@
+accounts:
+    - account_id: '612646292843'
+      name: contact-center
+      regions:
+      - us-east-1
+      role: arn:aws:iam::612646292843:role/sre-ec2-role-assumed

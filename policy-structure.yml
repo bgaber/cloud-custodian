@@ -1,0 +1,8 @@
+policies:
+- name: a-name-you-create
+  resource: actual resource name from cc documentation
+  description: My first policy
+  filters:
+    - type: a type from cc resource documentation
+  actions:
+    - type: a type from cc resource documentation

@@ -1,0 +1,6 @@
+accounts:
+    - account_id: '172507017890'
+      name: ca-prod
+      regions:
+      - ca-central-1
+      role: arn:aws:iam::172507017890:role/sre-ec2-role-assumed

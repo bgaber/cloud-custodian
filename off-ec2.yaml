@@ -1,0 +1,10 @@
+policies:
+  - name: offhour-evening-stop
+    resource: ec2
+    filters:
+      - type: offhour
+        tag: custodian_downtime
+        default_tz: et
+        offhour: 14
+    actions:
+      - stop
