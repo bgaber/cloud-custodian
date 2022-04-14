@@ -34,7 +34,7 @@ The policy is validated automatically when you run it, but you can also validate
 
 `custodian validate /home/awsadmin/bg216063/cloud-custodian/policy.yaml`
 
-You can also check which resources are identified by the policy, without running any actions on the resources:
+You can also check which resources are identified by the policy, without running any actions on the resources by using the --dryrun option shown below:
 
 `c7n-org run -c /home/awsadmin/bg216063/cloud-custodian/accounts.yaml -s /tmp -u /home/awsadmin/bg216063/cloud-custodian/policy.yaml --dryrun`
 
