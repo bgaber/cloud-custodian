@@ -71,6 +71,11 @@ accounts:
       regions:
       - ca-central-1
       role: arn:aws:iam::172507017890:role/sre-ec2-role-assumed
+    - account_id: '612646292843'
+      name: contact-center
+      regions:
+      - us-east-1
+      role: arn:aws:iam::612646292843:role/sre-ec2-role-assumed
 ```
 
 A policy file will have a format like:
@@ -88,70 +93,72 @@ policies:
 
 Here is an example of a real policy file that removes some unused Security Group rules, adds one new rule and sends an email notification of all the Security Groups that were modified:
 
-    policies:
-    - name: mcafee-security-rules-rm-add
-      resource: security-group
-      description: Remove unused McAfee Security Group rules and add one new rule
-      filters:
-        - or:
-          - type: ingress
-            Ports: [445, 8085]
-            Cidr:
-              value: "10.16.10.174/32"
-          - type: ingress
-            Ports: [445, 8085]
-            Cidr:
-              value: "10.17.2.183/32"
-          - type: ingress
-            Ports: [445, 8085]
-            Cidr:
-              value: "10.17.2.182/32"
-          - type: ingress
-            Ports: [445, 8085]
-            Cidr:
-              value: "10.17.2.180/32"
-          - type: ingress
-            Ports: [443, 445, 8082, 8085]
-            Cidr:
-              value: "10.17.2.249/32"
-      actions:
-        - type: set-permissions
-          # remove the permission matched by a previous ingress filter.
-          remove-ingress: matched
-          # add a list of permissions to the group.
-          add-ingress:
-            - IpPermissions:
-              - IpProtocol: TCP
-                FromPort: 443
-                ToPort: 443
-                IpRanges:
-                  - Description: allow McAfee EPO access from spw099epo02-new
-                    CidrIp: "10.17.2.249/32"
-              - IpProtocol: TCP
-                FromPort: 445
-                ToPort: 445
-                IpRanges:
-                  - Description: allow McAfee EPO access from spw099epo02-new
-                    CidrIp: "10.17.2.249/32"
-              - IpProtocol: TCP
-                FromPort: 8082
-                ToPort: 8082
-                IpRanges:
-                  - Description: allow McAfee EPO access from spw099epo02-new
-                    CidrIp: "10.17.2.249/32"
-              - IpProtocol: TCP
-                FromPort: 8085
-                ToPort: 8085
-                IpRanges:
-                  - Description: allow McAfee EPO access from spw099epo02-new
-                    CidrIp: "10.17.2.249/32"
-        - type: notify
-          template: default.html
-          template_format: html
-          priority_header: '1'
-          subject: "{{ account }} McAfee Security Group Rule Modification (old removed and one new added)"
-          to:
-            - brian.gaber@compucom.com
-          transport:
-            type: sqs
-            queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+```
+policies:
+- name: mcafee-security-rules-rm-add
+  resource: security-group
+  description: Remove unused McAfee Security Group rules and add one new rule
+  filters:
+    - or:
+      - type: ingress
+        Ports: [445, 8085]
+        Cidr:
+          value: "10.16.10.174/32"
+      - type: ingress
+        Ports: [445, 8085]
+        Cidr:
+          value: "10.17.2.183/32"
+      - type: ingress
+        Ports: [445, 8085]
+        Cidr:
+          value: "10.17.2.182/32"
+      - type: ingress
+        Ports: [445, 8085]
+        Cidr:
+          value: "10.17.2.180/32"
+      - type: ingress
+        Ports: [443, 445, 8082, 8085]
+        Cidr:
+          value: "10.17.2.249/32"
+  actions:
+    - type: set-permissions
+      # remove the permission matched by a previous ingress filter.
+      remove-ingress: matched
+      # add a list of permissions to the group.
+      add-ingress:
+        - IpPermissions:
+          - IpProtocol: TCP
+            FromPort: 443
+            ToPort: 443
+            IpRanges:
+              - Description: allow McAfee EPO access from spw099epo02-new
+                CidrIp: "10.17.2.249/32"
+          - IpProtocol: TCP
+            FromPort: 445
+            ToPort: 445
+            IpRanges:
+              - Description: allow McAfee EPO access from spw099epo02-new
+                CidrIp: "10.17.2.249/32"
+          - IpProtocol: TCP
+            FromPort: 8082
+            ToPort: 8082
+            IpRanges:
+              - Description: allow McAfee EPO access from spw099epo02-new
+                CidrIp: "10.17.2.249/32"
+          - IpProtocol: TCP
+            FromPort: 8085
+            ToPort: 8085
+            IpRanges:
+              - Description: allow McAfee EPO access from spw099epo02-new
+                CidrIp: "10.17.2.249/32"
+    - type: notify
+      template: default.html
+      template_format: html
+      priority_header: '1'
+      subject: "{{ account }} McAfee Security Group Rule Modification (old removed and one new added)"
+      to:
+        - brian.gaber@compucom.com
+      transport:
+        type: sqs
+        queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+```
