@@ -1,0 +1,60 @@
+policies:
+  - name: modify-prod-security-group-rules
+    resource: security-group
+    description: |
+      Modify Security Group Rules
+    filters:
+      - type: value
+        key: GroupId
+        op: in
+        value:
+          - sg-cb517fbf
+          - sg-fe6c548a
+    actions:
+      - type: set-permissions
+        # remove the permissions described below
+        remove-ingress:
+          - IpProtocol: TCP
+            FromPort: 5985
+            ToPort: 5985
+            IpRanges:
+              - CidrIp: "10.251.0.0/21"
+          - IpProtocol: TCP
+            FromPort: 5986
+            ToPort: 5986
+            IpRanges:
+              - CidrIp: "10.251.0.0/21"
+
+        # add a list of permissions to the group.
+        add-ingress:
+          - IpPermissions:
+              - IpProtocol: TCP
+                FromPort: 5985
+                ToPort: 5985
+                IpRanges:
+                  - Description: WINRM-HTTP from AWX host in shared services
+                    CidrIp: "10.251.2.0/23"
+                  - Description: WINRM-HTTP from AWX host in shared services
+                    CidrIp: "10.251.4.0/23"
+              - IpProtocol: TCP
+                FromPort: 5986
+                ToPort: 5986
+                IpRanges:
+                  - Description: WINRM-HTTPS from AWX host in shared services
+                    CidrIp: "10.251.2.0/23"
+                  - Description: WINRM-HTTPS from AWX host in shared services
+                    CidrIp: "10.251.4.0/23"
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        subject: '{{ account }} Modified Security Group Rules'
+        violation_desc: "These Security Groups have been modified with new rules:"
+        action_desc: |
+            "Actions Taken:  None.
+            The listed Security Groups were modified."
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian

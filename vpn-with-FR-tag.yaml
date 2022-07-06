@@ -1,0 +1,18 @@
+policies:
+  - name: vpn-with-foregrock-tag
+    resource: vpn-connection
+    description: |
+      Find instances with tag of Forgerock
+    filters:
+      - "tag:Application": Forgerock
+    actions:
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        subject: "{{ account }} VPNs With Forgerock Tag"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
