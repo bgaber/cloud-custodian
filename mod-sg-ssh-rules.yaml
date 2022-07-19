@@ -1,0 +1,28 @@
+policies:
+  - name: modify-internet-sg-rules
+    resource: security-group
+    filters:
+      - or:
+        - type: ingress
+          IpProtocol: tcp
+          Ports: [22]
+          Cidr: "0.0.0.0/0"
+        - type: ingress
+          IpProtocol: tcp
+          Ports: [22]
+          CidrV6: "::/0"
+    actions:
+     - type: set-permissions
+       # remove the permission matched by a previous ingress filter.
+       remove-ingress: matched
+
+       # add a list of permissions to the group.
+       add-ingress:
+         # full syntax/parameters to authorize can be used.
+         - IpPermissions:
+            - IpProtocol: TCP
+              FromPort: 22
+              ToPort: 22
+              IpRanges:
+                - Description: SSH Access
+                  CidrIp: "10.218.0.0/16"

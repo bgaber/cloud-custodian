@@ -1,0 +1,28 @@
+policies:
+  - name: modify-internet-sg-rules
+    resource: security-group
+    filters:
+      - or:
+        - type: ingress
+          IpProtocol: tcp
+          Ports: [3389]
+          Cidr: "0.0.0.0/0"
+        - type: ingress
+          IpProtocol: tcp
+          Ports: [3389]
+          CidrV6: "::/0"
+    actions:
+     - type: set-permissions
+       # remove the permission matched by a previous ingress filter.
+       remove-ingress: matched
+
+       # add a list of permissions to the group.
+       add-ingress:
+         # full syntax/parameters to authorize can be used.
+         - IpPermissions:
+            - IpProtocol: TCP
+              FromPort: 3389
+              ToPort: 3389
+              IpRanges:
+                - Description: RDP Access
+                  CidrIp: "10.218.0.0/16"
