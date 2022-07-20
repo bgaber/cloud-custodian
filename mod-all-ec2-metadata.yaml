@@ -1,0 +1,22 @@
+policies:
+  - name: ec2-require-imdsv2
+    resource: ec2
+    filters:
+      - MetadataOptions.HttpTokens: optional
+    actions:
+      - type: set-metadata-access
+        tokens: required
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        subject: '{{ account }} instance metadata set to IMDSv2 for all EC2 instances'
+        violation_desc: "All these instances have had their metadata set to IMDSv2:"
+        action_desc: |
+            "Actions Taken: Metadata set to IMDSv2.
+            The listed instances have had their metadata set to IMDSv2."
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian

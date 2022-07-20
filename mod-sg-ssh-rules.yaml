@@ -32,6 +32,9 @@ policies:
         template_format: html
         priority_header: '1'
         subject: "{{ account }} Modify Security Group SSH Rules"
+        action_desc: |
+            "Actions Taken:  CIDR changed to 10.218.0.0/16.
+            The listed Security Groups have been modified."
         to:
           - brian.gaber@compucom.com
         transport:
