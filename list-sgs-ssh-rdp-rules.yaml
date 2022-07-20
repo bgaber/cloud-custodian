@@ -1,0 +1,30 @@
+policies:
+  - name: list-sgs-ssh-rdp-rules
+    resource: security-group
+    description: |
+      List security groups with both ssh and rdp rules for 10.218.0.0/16
+    filters:
+      - and:
+        - type: ingress
+          IpProtocol: tcp
+          Ports: [22]
+          Cidr: "10.218.0.0/16"
+        - type: ingress
+          IpProtocol: tcp
+          Ports: [3389]
+          Cidr: "10.218.0.0/16"
+    actions:
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        subject: '{{ account }} Security Groups with both ssh and rdp rules for 10.218.0.0/16'
+        violation_desc: "These Security Groups have both ssh and rdp rules for 10.218.0.0/16:"
+        action_desc: |
+            "Actions Taken:  None.
+            The listed Security Groups have both ssh and rdp rules for 10.218.0.0/16."
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
