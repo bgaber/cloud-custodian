@@ -1,0 +1,22 @@
+policies:
+  - name: CheckForPublicAclBlock-Off
+    resource: s3
+    filters:
+      - type: check-public-block
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+    actions:
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        subject: '{{ account }} Public S3 buckets'
+        violation_desc: "All these S3 Buckets have publice access:"
+        action_desc: |
+            "Actions Taken: None.
+            The listed S3 Buckets have publice access."
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
