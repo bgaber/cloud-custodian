@@ -11,10 +11,10 @@ policies:
         template_format: html
         priority_header: '1'
         subject: '{{ account }} Public S3 buckets'
-        violation_desc: "All these S3 Buckets have publice access:"
+        violation_desc: "All these S3 Buckets have public access:"
         action_desc: |
             "Actions Taken: None.
-            The listed S3 Buckets have publice access."
+            The listed S3 Buckets have public access."
         to:
           - brian.gaber@compucom.com
         transport:

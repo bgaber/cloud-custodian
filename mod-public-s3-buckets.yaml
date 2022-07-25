@@ -1,0 +1,45 @@
+policies:
+  - name: ChangeS3BucketsToPrivate
+    resource: s3
+    filters:
+      - and:
+        - type: value
+          key: Name
+          op: not-in
+          value:
+            - sre-keepass-bucket
+            - compucom-uat-hold-music-east-1
+            - compucom-prod-hold-music-east-1
+            - compucom-ivr-prod-hold-music
+            - compucom-webchat-prod-settings
+            - compucom-webchat-prod
+            - compucom-webchat-uat-settings
+            - compucom-dev-hold-music-east-1
+            - now.compucom.com
+            - data-engineering-preprod
+        - type: check-public-block
+          IgnorePublicAcls: false
+          BlockPublicAcls: false
+          BlockPublicPolicy: false
+          RestrictPublicBuckets: false
+
+    actions:
+      - type: set-public-block
+        IgnorePublicAcls: true
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        RestrictPublicBuckets: true
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        subject: '{{ account }} Modify Public S3 Buckets To Private'
+        violation_desc: "All these S3 Buckets had public access:"
+        action_desc: |
+            "Actions Taken: Modify Public ACLs and Public Policy.
+            The listed S3 Buckets had public access."
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian

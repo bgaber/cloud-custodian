@@ -1,0 +1,36 @@
+policies:
+  - name: ChangeOneS3BucketToPrivate
+    resource: s3
+    filters:
+      - and:
+        - type: value
+          key: Name
+          op: in
+          value:
+            - cts-test-desktopimages
+        - type: check-public-block
+          IgnorePublicAcls: false
+          BlockPublicAcls: false
+          BlockPublicPolicy: false
+          RestrictPublicBuckets: false
+
+    actions:
+      - type: set-public-block
+        IgnorePublicAcls: true
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        RestrictPublicBuckets: true
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        subject: '{{ account }} Modify One Public S3 Bucket To Private'
+        violation_desc: "All these S3 Buckets had public access:"
+        action_desc: |
+            "Actions Taken: Modify Public ACLs and Public Policy.
+            The listed S3 Buckets had public access."
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
