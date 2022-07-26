@@ -29,3 +29,8 @@ accounts:
       regions:
       - us-east-1
       role: arn:aws:iam::612646292843:role/sre-ec2-role-assumed
+    - account_id: '759879106058'
+      name: package-factory
+      regions:
+      - us-east-1
+      role: arn:aws:iam::759879106058:role/sre-ec2-role-assumed
