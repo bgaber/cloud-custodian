@@ -15,6 +15,7 @@ policies:
             - compucom-webchat-prod
             - compucom-webchat-uat-settings
             - compucom-dev-hold-music-east-1
+            - compucom-prod-status-messages
             - now.compucom.com
             - data-engineering-preprod
         - type: check-public-block
