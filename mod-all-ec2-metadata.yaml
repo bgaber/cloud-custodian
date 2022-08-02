@@ -2,7 +2,13 @@ policies:
   - name: ec2-require-imdsv2
     resource: ec2
     filters:
-      - MetadataOptions.HttpTokens: optional
+      - and:
+        - type: value
+          key: id
+          op: not-in
+          value:
+            - i-01bab64b8a95daa27
+        - MetadataOptions.HttpTokens: optional
     actions:
       - type: set-metadata-access
         tokens: required
@@ -10,7 +16,7 @@ policies:
         template: default.html
         template_format: html
         priority_header: '1'
-        subject: '{{ account }} instance metadata set to IMDSv2 for all EC2 instances'
+        subject: '{{ account }} instance metadata set to IMDSv2 for all EC2 instances except SPLAWSSREDKR01 because IMDSv2 breaks Drone CI'
         violation_desc: "All these instances have had their metadata set to IMDSv2:"
         action_desc: |
             "Actions Taken: Metadata set to IMDSv2.

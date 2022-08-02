@@ -1,0 +1,6 @@
+accounts:
+    - account_id: '122639376858'
+      name: us-prod
+      regions:
+      - us-east-1
+      role: arn:aws:iam::122639376858:role/sre-ec2-role-assumed

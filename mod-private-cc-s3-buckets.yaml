@@ -1,0 +1,86 @@
+policies:
+  - name: ChangeS3BucketsToPrivate
+    resource: s3
+    filters:
+      - and:
+        - type: value
+          key: Name
+          op: in
+          value:
+            - amazon-connect-34fda893abb9
+            - client-media-file
+            - cf-templates-1uivsg1d4rq38-us-east-2
+            - compucom-dashboard-dev-deployment-serverlessx
+            - compucom-dashboard-prod-deploy-serverless
+            - compucom-dashboard-prodv2-deployment-serverlessx
+            - compucom-dashboard-uat-deploy-serverless
+            - compucom-dashboard-uatv2-deployment-serverlessx
+            - compucom-dev-hold-music-east-2
+            - compucom-dev-hold-music-west-1
+            - compucom-dev-hold-music-west-2
+            - compucom-ivr-prod-deploy-serverless
+            - compucom-ivr-prodv2-deployment-serverlessx
+            - compucom-ivr-uat-deploy-serverless
+            - compucom-ivr-uatv2-deployment-serverlessx
+            - compucom-plugins-prod-v2
+            - compucom-plugins-uat-v2
+            - compucom-prod-hold-music
+            - compucom-prod-hold-music-east-2
+            - compucom-prod-hold-music-west-2
+            - compucom-prod-hold-music-west-1
+            - compucom-prod-status-messages
+            - compucom-taskrouter-wraptimer-prod-deploy-serverless
+            - compucom-taskrouter-wraptimer-uat-deploy-serverless
+            - compucom-uat-hold-music
+            - compucom-uat-hold-music-east-2
+            - compucom-uat-hold-music-west-1
+            - compucom-uat-hold-music-west-2
+            - contact-center-lambda-ed-serverlessdeploymentbuck-1e1o363t1lthd
+            - compucom-uat-status-messages
+            - compucom-webchat-uat
+            - config-bucket-612646292843
+            - compucom-workers-editor-dev
+            - contact-center-dashboard-devv2-deployment-serverlessx
+            - contact-center-dev-hold-music
+            - contact-center-email-dev-deploy-serverless
+            - contact-center-email-prod-deploy-serverless
+            - contact-center-email-uat-deploy-serverless
+            - contact-center-ivr-dev-deployment-serverlessx
+            - contact-center-ivr-devv2-deployment-serverlessx
+            - contact-center-lambda-ed-serverlessdeploymentbuck-1e1o363t1lthd
+            - contact-center-lookups-dev-deploy-serverless
+            - contact-center-lookups-prod-deploy-serverless
+            - contact-center-lookups-uat-deploy-serverless
+            - contact-center-plugins-dev-v2
+            - contact-center-teams-dev-deploy-serverless
+            - contact-center-teams-prod-deploy-serverless
+            - contact-center-teams-uat-deploy-serverless
+            - contact-center-webchat-dev
+            - contact-center-webchat-dev-settings
+            - iss-wgtwchr-qa-msg
+            - flagiconscompucom
+            - phonecall-ringalert
+            - post-interaction-survey-prompts-dev
+            - post-interaction-survey-prompts-prod
+            - post-interaction-survey-prompts-uat
+            - whisper-anouncements-recordings
+    actions:
+      - type: set-public-block
+        IgnorePublicAcls: false
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        RestrictPublicBuckets: false
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        subject: '{{ account }} Modify Public S3 Buckets To Private'
+        violation_desc: "All these S3 Buckets had public access:"
+        action_desc: |
+            "Actions Taken: Modify Public ACLs and Public Policy.
+            The listed S3 Buckets had public access."
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
