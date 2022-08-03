@@ -4,7 +4,7 @@ policies:
     filters:
       - and:
         - type: value
-          key: id
+          key: InstanceId
           op: not-in
           value:
             - i-01bab64b8a95daa27
