@@ -1,0 +1,3 @@
+policies:
+- name: list-of-acm-certs
+  resource: acm-certificate

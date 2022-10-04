@@ -1,0 +1,27 @@
+policies:
+- name: expiring-acm-certs
+  description: |
+    returns certs which are about to expire in 60 days or less
+  resource: acm-certificate
+  filters:
+    - and:
+        - type: value
+          key: NotAfter
+          op: less-than
+          value_type: expiration
+          value: 60
+        - type: value
+          key: Status
+          op: equal
+          value: ISSUED
+  actions:
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        subject: "{{ account }} Expiring ACM Certificates"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
