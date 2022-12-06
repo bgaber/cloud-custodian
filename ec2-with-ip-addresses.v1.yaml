@@ -1,0 +1,21 @@
+policies:
+  - name: instances-with-ip-addresses
+    resource: ec2
+    description: |
+      Find instances with IP Addresses
+    filters:
+      - type: value
+        key: PrivateIpAddress
+        op: in
+        value: 10.251.2.179
+    actions:
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        subject: "{{ account }} EC2 Instances With IP Addresses"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
