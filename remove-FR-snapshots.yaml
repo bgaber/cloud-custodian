@@ -1,5 +1,5 @@
 policies:
-  - name: ebs-delete-old-ebs-snapshots
+  - name: ebs-delete-fr-ebs-snapshots
     resource: ebs-snapshot
     filters:
         - type: age
@@ -14,9 +14,9 @@ policies:
         template: default.html
         template_format: html
         priority_header: '1'
-        violation_desc: "These EBS Snapshots do not have a tag for Application or Owner:"
+        violation_desc: "These EBS Snapshots are tagged for ForgeRock:"
         action_desc: |
-            "Actions Taken: The listed EBS Snapshots were deleted because their Application and Owner are unknown."
+            "Actions Taken: The listed EBS Snapshots were deleted because they are tagged for ForgeRock."
         subject: "{{ account }} Deleted EBS Snapshots"
         to:
           - brian.gaber@compucom.com
