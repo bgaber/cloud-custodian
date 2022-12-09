@@ -3,7 +3,7 @@ policies:
     resource: ebs-snapshot
     filters:
         - type: age
-          days: 1
+          days: 14
           op: ge
         - and:
           - "tag:Owner": Michael Graf
