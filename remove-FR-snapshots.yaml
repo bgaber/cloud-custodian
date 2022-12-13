@@ -7,7 +7,9 @@ policies:
           op: ge
         - and:
           - "tag:Owner": Michael Graf
-          - "tag:Creator": Brian Gaber
+          - "tag:Application": Forgerock
+          #- "tag:aws:dlm:lifecycle-schedule-name": Schedule 1
+          - "tag:cpm_policy_name": absent
     actions:
       - delete
       - type: notify
