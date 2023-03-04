@@ -1,0 +1,22 @@
+policies:
+  - name: list-unused-security-groups
+    resource: security-group
+    description: |
+      List unused security groups
+    filters:
+      - unused 
+    actions:
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        subject: '{{ account }} Unused Security Groups'
+        violation_desc: "These Security Groups are not used by any AWS resource:"
+        action_desc: |
+            "Actions Taken:  None.
+            The listed Security Groups are unused."
+        to:
+          - arn:aws:sns:us-east-1:472510080448:CloudCustodian
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
