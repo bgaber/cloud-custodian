@@ -1,0 +1,25 @@
+policies:
+  - name: list-decomm-ebs-snapshots
+    resource: ebs-snapshot
+    comment: |
+      Report on total count of untagged egs snapshots
+    filters:
+      - and:
+        - "tag:Purpose": decomm
+        - type: age
+          days: 90
+          op: ge
+    actions:
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        violation_desc: "These EBS Snapshots are candidates for deletion:"
+        action_desc: |
+            "Actions Taken: The listed EBS Snapshots were created for a past EC2 decommission and are now old than 90 days"
+        subject: "{{ account }} Old EBS Snapshots From a Decommission"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
