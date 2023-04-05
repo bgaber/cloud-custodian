@@ -2,7 +2,7 @@ policies:
   - name: list-decomm-ebs-snapshots
     resource: ebs-snapshot
     comment: |
-      Report on total count of untagged egs snapshots
+      Report on total count of decommissioned EBS snapshots
     filters:
       - and:
         - "tag:Purpose": decomm
