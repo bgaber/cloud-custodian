@@ -1,5 +1,5 @@
 policies:
-  - name: list-private subnets
+  - name: list-private-subnets
     resource: subnet
     filters:
       - type: value
