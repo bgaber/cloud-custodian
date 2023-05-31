@@ -1,8 +1,8 @@
 policies:
-- name: list-security-groups-with-ports
+- name: list-security-groups-with-some-ports
   resource: security-group
   filters:
-    - and:
+    - or:
       - type: ingress
         Ports: [22]
       - type: ingress
