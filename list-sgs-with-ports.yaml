@@ -1,0 +1,32 @@
+policies:
+- name: list-security-groups-with-ports
+  resource: security-group
+  filters:
+    - or:
+      - type: ingress
+        Ports: [22]
+      - type: ingress
+        Ports: [53]
+      - type: ingress
+        Ports: [88]
+      - type: ingress
+        Ports: [123]
+      - type: ingress
+        Ports: [389]
+      - type: ingress
+        Ports: [445]
+      - type: ingress
+        Ports: [464]
+      - type: ingress
+        Ports: [3268]
+  actions:
+    - type: notify
+      template: default.html
+      template_format: html
+      priority_header: '1'
+      subject: "{{ account }} Security Groups with any of these ports - 22, 53, 88, 123, 389, 445, 464 or 3268"
+      to:
+        - brian.gaber@compucom.com
+      transport:
+        type: sqs
+        queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
