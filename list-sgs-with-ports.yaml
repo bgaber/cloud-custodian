@@ -2,7 +2,7 @@ policies:
 - name: list-security-groups-with-ports
   resource: security-group
   filters:
-    - or:
+    - and:
       - type: ingress
         Ports: [22]
       - type: ingress
