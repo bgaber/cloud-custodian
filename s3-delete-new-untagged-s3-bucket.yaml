@@ -1,0 +1,33 @@
+policies:
+  - name: s3-delete-new-untagged-s3-bucket
+    resource: s3
+    description: |
+      This policy is triggered on the S3 CreateBucket event
+    mode:
+      type: cloudtrail
+      events:
+        - source: 's3.amazonaws.com'
+          event: CreateBucket
+          ids: "requestParameters.bucketName"
+    filters:
+      - or:
+          - "tag:Owner": absent
+          - "tag:Application": absent
+          - "tag:Creator": absent
+    actions:
+      - type: delete
+        remove-contents: true
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: 1
+        subject: "{{ account }} New S3 Bucket Was Deleted"
+        violation_desc: "This new S3 bucket was missing the Owner, Application or Creator mandatory tags:"
+        action_desc: |
+            "Actions Taken:  S3 bucket was deleted"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+            type: sqs
+            queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+            region: us-east-1

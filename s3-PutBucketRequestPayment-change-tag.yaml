@@ -1,0 +1,17 @@
+policies:
+  - name: s3-PutBucketRequestPayment-change-tag
+    resource: s3
+    description: |
+      This policy is triggered on the S3 PutBucketRequestPayment event
+    mode:
+      type: cloudtrail
+      events:
+        - source: 's3.amazonaws.com'
+          event: PutBucketRequestPayment
+          ids: "requestParameters.bucketName"
+    actions:
+      - type: auto-tag-user
+        tag: WhoPutBucketRequestPayment
+      - type: tag
+        tag: WhenPutBucketRequestPayment
+        value: "{{now}}"

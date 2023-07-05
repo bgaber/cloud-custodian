@@ -1,0 +1,27 @@
+policies:
+  - name: s3-DeleteBucket-change-tag
+    resource: s3
+    description: |
+      This policy is triggered on the S3 DeleteBucket event
+    mode:
+      type: cloudtrail
+      events:
+        - source: 's3.amazonaws.com'
+          event: DeleteBucket
+          ids: "requestParameters.bucketName"
+    actions:
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: 1
+        subject: "{{ account }} S3 Bucket Was Deleted"
+        violation_desc: "This S3 bucket was deleted:"
+        action_desc: |
+            "Actions Taken:  None.
+            At this point we are just notifying you of this event."
+        to:
+          - sre-cloud-custodian@compucom.com
+        transport:
+            type: sqs
+            queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+            region: us-east-1

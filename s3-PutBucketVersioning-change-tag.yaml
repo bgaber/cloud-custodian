@@ -1,0 +1,17 @@
+policies:
+  - name: s3-PutBucketVersioning-change-tag
+    resource: s3
+    description: |
+      This policy is triggered on the S3 PutBucketVersioning event
+    mode:
+      type: cloudtrail
+      events:
+        - source: 's3.amazonaws.com'
+          event: PutBucketVersioning
+          ids: "requestParameters.bucketName"
+    actions:
+      - type: auto-tag-user
+        tag: WhoPutBucketVersioning
+      - type: tag
+        tag: WhenPutBucketVersioning
+        value: "{{now}}"
