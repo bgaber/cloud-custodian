@@ -2,10 +2,9 @@ policies:
   - name: rds-cluster-owner-tag-instances
     resource: rds-cluster
     filters:
-      - "tag:Application": Forgerock
-      - or:
+      - and:
         - "tag:Owner": Aaron Fiskum
-        - "tag:Owner": Steve Wylie
+        - "tag:Application": Forgerock
     actions:
       - type: tag
         key: Owner
