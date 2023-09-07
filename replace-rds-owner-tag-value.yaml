@@ -2,11 +2,10 @@ policies:
   - name: rds-owner-tag-instances
     resource: rds
     filters:
-      - and:
-        - or:
-          - "tag:Owner": Steve Wylie
-          - "tag:Owner": Aaron Fiskum
-        - "tag:Application": Forgerock
+      - "tag:Application": Forgerock
+      - or:
+        - "tag:Owner": Aaron Fiskum
+        - "tag:Owner": Steve Wylie
     actions:
       - type: tag
         key: Owner
@@ -18,7 +17,7 @@ policies:
         subject: "{{ account }} - Replaced RDS Owner Tag Value"
         violation_desc: "These RDS have had their Owner tag changed"
         action_desc: |
-            "These RDS have had their Owner tag changed from Steve Wylie to Michael Graf."
+            "These RDS have had their Owner tag changed from Aaron Fiskum or Steve Wylie to Michael Graf."
         to:
           - brian.gaber@compucom.com
         transport:
