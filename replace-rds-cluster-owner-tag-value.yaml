@@ -3,7 +3,9 @@ policies:
     resource: rds-cluster
     filters:
       - and:
-        - "tag:Owner": Steve Wylie
+        - or:
+          - "tag:Owner": Steve Wylie
+          - "tag:Owner": Aaron Fiskum
         - "tag:Application": Forgerock
     actions:
       - type: tag

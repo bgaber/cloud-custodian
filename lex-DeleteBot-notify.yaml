@@ -1,0 +1,22 @@
+policies:
+  - name: lex-DeleteBot-notify
+    resource: lex
+    description: |
+      This policy is triggered on the Lex DeleteBot event
+    mode:
+      type: cloudtrail
+      events:
+        - source: 'lex.amazonaws.com'
+          event: DeleteBot
+          ids: "requestParameters.botName"
+    actions:
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        subject: "{{ account }} Deleted Lex Bot"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
