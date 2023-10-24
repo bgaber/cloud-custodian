@@ -1,0 +1,14 @@
+policies:
+  - name: list-rds-snapshots
+    resource: rds-snapshot
+    actions:
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        subject: "{{ account }} RDS Snapshots"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
