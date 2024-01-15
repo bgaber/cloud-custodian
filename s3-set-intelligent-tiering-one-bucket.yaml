@@ -12,9 +12,9 @@ policies:
         IntelligentTieringConfiguration:
           Id: compucom-default
           Status: Enabled
-          Transition:
+          Tierings:
             - Days: 0
-              Tierings: INTELLIGENT_TIERING
+              AccessTier: INTELLIGENT_TIERING
       - type: notify
         template: default.html
         template_format: html
