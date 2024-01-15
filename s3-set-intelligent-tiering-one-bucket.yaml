@@ -14,7 +14,7 @@ policies:
           Status: Enabled
           Transition:
             - Days: 0
-              StorageClass: INTELLIGENT_TIERING
+              Tierings: INTELLIGENT_TIERING
       - type: notify
         template: default.html
         template_format: html
