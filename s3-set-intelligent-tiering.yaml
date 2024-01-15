@@ -7,21 +7,22 @@ policies:
           attrs:
             - Status: Enabled
     actions:
-      - type: set-intelligent-tiering
-        Id: compucom-default
-        IntelligentTieringConfiguration:
+      - and:
+        - type: set-intelligent-tiering
           Id: compucom-default
-          Status: Enabled
-          Tierings:
-            - Days: 0
-              AccessTier: INTELLIGENT_TIERING
-      - type: notify
-        template: default.html
-        template_format: html
-        priority_header: '1'
-        subject: "{{ account }} EC2 Instances"
-        to:
-          - brian.gaber@compucom.com
-        transport:
-          type: sqs
-          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+          IntelligentTieringConfiguration:
+            Id: compucom-default
+            Status: Enabled
+            Tierings:
+              - Days: 0
+                AccessTier: INTELLIGENT_TIERING
+        - type: notify
+          template: default.html
+          template_format: html
+          priority_header: '1'
+          subject: "{{ account }} S3 Buckets Set Intelligent Tiering"
+          to:
+            - brian.gaber@compucom.com
+          transport:
+            type: sqs
+            queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
