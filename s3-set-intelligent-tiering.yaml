@@ -13,8 +13,8 @@ policies:
           Id: compucom-default
           Status: Enabled
           Tierings:
-            - Days: 14
-              AccessTier: ARCHIVE_ACCESS
+            - Days: 0
+              AccessTier: INTELLIGENT_TIERING
       - type: notify
         template: default.html
         template_format: html

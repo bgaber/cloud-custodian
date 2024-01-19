@@ -1,5 +1,5 @@
 policies:
-  - name: rm-unused-security-groups-16mar2022
+  - name: rm-unused-security-groups-19jan2024
     resource: security-group
     description: |
       Delete unused security groups
