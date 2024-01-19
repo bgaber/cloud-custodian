@@ -4,8 +4,10 @@ policies:
     description: |
       Delete unused security groups
     filters:
-      - not:
-        - default-vpc
+      - type: value
+        key: GroupName
+        op: ne
+        value: default
       - unused 
     actions:
       - delete
