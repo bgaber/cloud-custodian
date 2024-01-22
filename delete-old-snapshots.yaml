@@ -1,0 +1,24 @@
+policies:
+  - name: delete-old-ebs-snapshots
+    resource: ebs-snapshot
+    comment: |
+      Report on total count of old EBS snapshots
+    filters:
+      - type: age
+        days: 90
+        op: ge
+    actions:
+      - delete
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        violation_desc: "These EBS Snapshots have been deleted:"
+        action_desc: |
+            "Actions Taken: The listed EBS Snapshots were deleted because they are now older than 90 days"
+        subject: "{{ account }} EBS Snapshots deleted because they were older than 90 days"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
