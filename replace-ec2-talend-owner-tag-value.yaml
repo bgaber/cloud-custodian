@@ -1,5 +1,5 @@
 policies:
-  - name: ec2-owner-tag-instances
+  - name: ec2-talend-owner-tag-instances
     resource: ec2
     filters:
       - and:
