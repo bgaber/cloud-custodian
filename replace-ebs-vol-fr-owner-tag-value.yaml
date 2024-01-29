@@ -1,0 +1,26 @@
+policies:
+  - name: ebs-vol-forgerock-owner-tag-instances
+    resource: ebs
+    filters:
+      - "tag:Application": ForgeRock
+      - or:
+        - "tag:Owner": Aaron Fiskum
+        - "tag:Owner": Steve Wylie
+    actions:
+      - type: tag
+        key: Owner
+        value: Michael Graf
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: 1
+        subject: "{{ account }} - Replaced Owner Tag Value"
+        violation_desc: "These EBS Volumes have had their Owner tag changed"
+        action_desc: |
+            "These EBS Volumes have had their Owner tag value changed from Aaron Fiskum or Steve Wylie to Michael Graf."
+        to:
+          - brian.gaber@compucom.com
+        transport:
+            type: sqs
+            queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+            region: us-east-1
