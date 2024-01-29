@@ -2,7 +2,7 @@ policies:
   - name: ebs-vol-forgerock-owner-tag-instances
     resource: ebs
     filters:
-      - "tag:Application": ForgeRock
+      - "tag:Application": Forgerock
       - or:
         - "tag:Owner": Aaron Fiskum
         - "tag:Owner": Steve Wylie

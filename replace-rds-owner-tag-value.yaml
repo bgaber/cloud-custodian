@@ -2,7 +2,7 @@ policies:
   - name: rds-owner-tag-instances
     resource: rds
     filters:
-      - "tag:Application": ForgeRock
+      - "tag:Application": Forgerock
       - or:
         - "tag:Owner": Aaron Fiskum
         - "tag:Owner": Steve Wylie
