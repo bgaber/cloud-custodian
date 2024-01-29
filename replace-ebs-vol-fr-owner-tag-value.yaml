@@ -6,6 +6,7 @@ policies:
       - or:
         - "tag:Owner": Aaron Fiskum
         - "tag:Owner": Steve Wylie
+        - "tag:Owner": Stephen Wylie
     actions:
       - type: tag
         key: Owner
