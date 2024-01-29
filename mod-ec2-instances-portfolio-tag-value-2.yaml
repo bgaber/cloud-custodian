@@ -8,7 +8,7 @@ policies:
         - "tag:Application": Careguard
         - "tag:Application": Talend
         - "tag:Application": Moogsoft
-        - "tag:Application": Ansible
+        - "tag:Application": AnsibleTower
         - "tag:Application": Bonitasoft
     actions:
       - type: tag
