@@ -28,7 +28,6 @@ policies:
         subject: "{{ account }} Fixed Untagged EBS Snapshots"
         to:
           - brian.gaber@compucom.com
-          - luis.dominguez@compucom.com
         transport:
           type: sqs
           queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian

@@ -1,0 +1,18 @@
+policies:
+- name: list-netiq-ebs-volumes
+  resource: ebs
+  description: |
+      Find EBS Volumes associated with NetIQ
+  actions:
+    filters:
+      - "tag:Application": NetIQ
+    - type: notify
+      template: default.html
+      template_format: html
+      priority_header: '1'
+      subject: "{{ account }} NetIQ Elastic Block Store (EBS) Volumes"
+      to:
+        - brian.gaber@compucom.com
+      transport:
+        type: sqs
+        queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
