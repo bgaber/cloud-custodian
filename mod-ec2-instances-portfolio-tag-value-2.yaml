@@ -4,7 +4,12 @@ policies:
     comment: |
       Modify Portfolio tag to all EC2 Instances with Application of Careguard
     filters:
-      - "tag:Application": Careguard
+      - or:
+        - "tag:Application": Careguard
+        - "tag:Application": Talend
+        - "tag:Application": Moogsoft
+        - "tag:Application": Ansible
+        - "tag:Application": Bonitasoft
     actions:
       - type: tag
         key: Portfolio
