@@ -1,0 +1,23 @@
+policies:
+  - name: set-talend-ec2-owner-tag-instances
+    resource: ec2
+    filters:
+      - "tag:Application": Talend
+    actions:
+      - type: tag
+        key: Owner
+        value: David Duitsman
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: 1
+        subject: "{{ account }} - Replaced Owner Tag Value"
+        violation_desc: "These EC2 Instance have had their Owner tag changed"
+        action_desc: |
+            "These EC2 Instance have had their Owner tag value set to David Duitsman."
+        to:
+          - brian.gaber@compucom.com
+        transport:
+            type: sqs
+            queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+            region: us-east-1
