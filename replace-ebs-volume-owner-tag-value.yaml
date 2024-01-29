@@ -1,5 +1,5 @@
 policies:
-  - name: ebs-netiq-owner-tag-volumes
+  - name: replace-netiq-ebs-volumes-owner-tag
     resource: ebs
     description: |
       Modify Owner tag of EBS Volumes associated with NetIQ
