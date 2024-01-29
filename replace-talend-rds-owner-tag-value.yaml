@@ -1,0 +1,28 @@
+policies:
+  - name: talend-rds-owner-tag-instances
+    resource: rds
+    filters:
+      - and:
+        - "tag:Application": Talend
+        - or:
+          - "tag:Owner": Mark Govostes
+          - "tag:Owner": Anant Wagle
+          - "tag:Owner": Chris Jarvis
+    actions:
+      - type: tag
+        key: Owner
+        value: David Duitsman
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: 1
+        subject: "{{ account }} - Replaced RDS Owner Tag Value"
+        violation_desc: "These RDS have had their Owner tag changed"
+        action_desc: |
+            "These RDS have had their Owner tag changed from Mark Govostes or Anant Wagle or Chris Jarvis to David Duitsman."
+        to:
+          - brian.gaber@compucom.com
+        transport:
+            type: sqs
+            queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+            region: us-east-1
