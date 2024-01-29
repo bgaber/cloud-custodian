@@ -2,10 +2,10 @@ policies:
 - name: list-netiq-ebs-volumes
   resource: ebs
   description: |
-      Find EBS Volumes associated with NetIQ
+    Find EBS Volumes associated with NetIQ
+  filters:
+    - "tag:Application": NetIQ
   actions:
-    filters:
-      - "tag:Application": NetIQ
     - type: notify
       template: default.html
       template_format: html
