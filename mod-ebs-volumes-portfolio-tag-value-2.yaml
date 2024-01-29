@@ -1,0 +1,24 @@
+policies:
+  - name: mod-ebs-volumes-portfolio-tag-value-2
+    resource: ebs
+    comment: |
+      Modify Portfolio tag to all EBS Volumes with Application of Careguard
+    filters:
+      - "tag:Application": Careguard
+    actions:
+      - type: tag
+        key: Portfolio
+        value: AiOps
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        violation_desc: "These EBS Volumes had Portfolio tag value changed to AiOps:"
+        action_desc: |
+            "Actions Taken: The listed EBS Volumes had Portfolio tag value changed to AiOps"
+        subject: "{{ account }} Modifed Portfolio Tag Value Of Some EBS Volumes"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
