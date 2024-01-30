@@ -1,0 +1,27 @@
+policies:
+  - name: mod-api-gw-v2-portfolio-tag-value-1
+    resource: aws.apigwv2
+    comment: |
+      Modify Portfolio tag to all API Gateways V2 with Application of Forgerock, Connect or Contact Center
+    filters:
+      - or:
+        - "tag:Application": "Contact Center"
+        - "tag:Application": Forgerock
+        - "tag:Application": Connect
+    actions:
+      - type: tag
+        key: Portfolio
+        value: "Digital Support"
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        violation_desc: "These API Gateways V2 had Portfolio tag value changed to Digital Support:"
+        action_desc: |
+            "Actions Taken: The listed API Gateways V2 had Portfolio tag value changed to Digital Support"
+        subject: "{{ account }} Modifed Portfolio Tag Value Of Some API Gateways V2"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
