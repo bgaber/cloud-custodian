@@ -1,0 +1,25 @@
+policies:
+  - name: add-portfolio-tag-to-all-nat-gws
+    resource: aws.nat-gateway
+    comment: |
+      Add Portfolio tag to all NAT GWs
+    filters:
+      - "tag:Portfolio": absent
+    actions:
+      - type: tag
+        key: Portfolio
+        value: Unknown
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: 1
+        subject: "{{ account }} Added Portfolio Tag to NAT GWs"
+        violation_desc: "Portfolio tag added to these NAT GWs:"
+        action_desc: |
+            "Actions Taken: The listed NAT GWs had Portfolio tag added with value of Unknown"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+          region: us-east-1
