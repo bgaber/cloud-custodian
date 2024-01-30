@@ -1,0 +1,22 @@
+policies:
+  - name: set-contact-center-api-gw-stages-portfolio-tag-value
+    resource: rest-stage
+    comment: |
+      Set Portfolio tag of all API Gateway Stages in the Contact Center account
+    actions:
+      - type: tag
+        key: Portfolio
+        value: "Digital Support"
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        violation_desc: "These API Gateway Stages had Portfolio tag value changed to Digital Support:"
+        action_desc: |
+            "Actions Taken: The listed API Gateway Stages had Portfolio tag value changed to Digital Support"
+        subject: "{{ account }} Modifed Portfolio Tag Value Of Some API Gateway Stages"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
