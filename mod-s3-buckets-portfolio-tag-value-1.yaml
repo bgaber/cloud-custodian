@@ -1,0 +1,27 @@
+policies:
+  - name: mod-s3-buckets-portfolio-tag-value-1
+    resource: s3
+    comment: |
+      Modify Portfolio tag to all S3 Buckets with Application of Forgerock, Connect or Contact Center
+    filters:
+      - or:
+        - "tag:Application": "Contact Center"
+        - "tag:Application": Forgerock
+        - "tag:Application": Connect
+    actions:
+      - type: tag
+        key: Portfolio
+        value: "Digital Support"
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        violation_desc: "These S3 Buckets had Portfolio tag value changed to Digital Support:"
+        action_desc: |
+            "Actions Taken: The listed S3 Buckets had Portfolio tag value changed to Digital Support"
+        subject: "{{ account }} Modifed Portfolio Tag Value Of Some S3 Buckets"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
