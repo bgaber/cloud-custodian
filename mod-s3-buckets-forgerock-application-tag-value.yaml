@@ -1,5 +1,5 @@
 policies:
-  - name: mod-s3-buckets-talend-application-tag-value
+  - name: mod-s3-buckets-forgerock-application-tag-value
     resource: s3
     comment: |
       Modify Application tag to all S3 Buckets with matching name
@@ -8,29 +8,29 @@ policies:
         - type: value
           key: Name
           op: contains
-          value: "talend"
+          value: "forgerock"
         - type: value
           key: Name
           op: contains
-          value: "Talend"
+          value: "Forgerock"
         - type: value
           key: Name
           op: contains
-          value: "tld"
+          value: "fr"
     actions:
       - type: tag
         key: Application
-        value: Talend
+        value: Forgerock
       - type: tag
         key: Portfolio
-        value: AiOps
+        value: "Digital Support"
       - type: notify
         template: default.html
         template_format: html
         priority_header: '1'
-        violation_desc: "These S3 Buckets had Application tag value changed to Talend:"
+        violation_desc: "These S3 Buckets had Application tag value changed to Forgerock:"
         action_desc: |
-            "Actions Taken: The listed S3 Buckets had Application tag value changed to Talend"
+            "Actions Taken: The listed S3 Buckets had Application tag value changed to Forgerock"
         subject: "{{ account }} Modifed Application Tag Value Of Some S3 Buckets"
         to:
           - brian.gaber@compucom.com
