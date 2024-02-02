@@ -1,12 +1,11 @@
 policies:
-  - name: mod-s3-buckets-portfolio-tag-value-2
-    resource: s3
+  - name: mod-efs-portfolio-tag-value-2
+    resource: efs
     comment: |
-      Modify Portfolio tag to all S3 Buckets with Applications used by the AiOps Portfolio
+      Modify Portfolio tag to all EFS with Applications used by the AiOps Portfolio
     filters:
       - or:
         - "tag:Application": Careguard
-        - "tag:Application": "CareGuard 3"
         - "tag:Application": Talend
         - "tag:Application": Moogsoft
         - "tag:Application": AnsibleTower
@@ -18,13 +17,15 @@ policies:
       - type: notify
         template: default.html
         template_format: html
-        priority_header: '1'
-        violation_desc: "These S3 Buckets had Portfolio tag value changed to AiOps:"
+        priority_header: 1
+        subject: "{{ account }} Modifed Portfolio Tag Value Of Some EFS"
+        violation_desc: "These EFS had Portfolio tag value changed to AiOps:"
         action_desc: |
-            "Actions Taken: The listed S3 Buckets had Portfolio tag value changed to AiOps"
-        subject: "{{ account }} Modifed Portfolio Tag Value Of Some S3 Buckets"
+            "Actions Taken: The listed EFS had Portfolio tag value changed to AiOps"
         to:
           - brian.gaber@compucom.com
         transport:
           type: sqs
           queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+          region: us-east-1
+

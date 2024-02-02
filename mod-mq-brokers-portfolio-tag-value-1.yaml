@@ -1,0 +1,29 @@
+policies:
+  - name: mod-mq-brokers-portfolio-tag-value-1
+    resource: aws.message-broker
+    comment: |
+      Modify Portfolio tag to all MQ Brokers with Application of Forgerock, Connect or Contact Center
+    filters:
+      - or:
+        - "tag:Application": "Contact Center"
+        - "tag:Application": Forgerock
+        - "tag:Application": Connect
+    actions:
+      - type: tag
+        key: Portfolio
+        value: "Digital Support"
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: 1
+        subject: "{{ account }} Modifed Portfolio Tag Value Of Some MQ Brokers"
+        violation_desc: "These MQ Brokers had Portfolio tag value changed to Digital Support:"
+        action_desc: |
+            "Actions Taken: The listed MQ Brokers had Portfolio tag value changed to Digital Support"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+          region: us-east-1
+

@@ -1,0 +1,29 @@
+policies:
+  - name: mod-efs-portfolio-tag-value-1
+    resource: efs
+    comment: |
+      Modify Portfolio tag to all EFS with Application of Forgerock, Connect or Contact Center
+    filters:
+      - or:
+        - "tag:Application": "Contact Center"
+        - "tag:Application": Forgerock
+        - "tag:Application": Connect
+    actions:
+      - type: tag
+        key: Portfolio
+        value: "Digital Support"
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: 1
+        subject: "{{ account }} Modifed Portfolio Tag Value Of Some EFS"
+        violation_desc: "These EFS had Portfolio tag value changed to Digital Support:"
+        action_desc: |
+            "Actions Taken: The listed EFS had Portfolio tag value changed to Digital Support"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+          region: us-east-1
+
