@@ -1,0 +1,35 @@
+policies:
+  - name: mod-s3-buckets-connect-application-tag-value
+    resource: s3
+    comment: |
+      Modify Application tag to all S3 Buckets with matching name
+    filters:
+      - or:
+        - type: value
+          key: Name
+          op: contains
+          value: "connect"
+        - type: value
+          key: Name
+          op: contains
+          value: "Connect"
+    actions:
+      - type: tag
+        key: Application
+        value: Connect
+      - type: tag
+        key: Portfolio
+        value: "Digital Support"
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        violation_desc: "These S3 Buckets had Application tag value changed to Connect:"
+        action_desc: |
+            "Actions Taken: The listed S3 Buckets had Application tag value changed to Connect"
+        subject: "{{ account }} Modifed Application Tag Value Of Some S3 Buckets"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
