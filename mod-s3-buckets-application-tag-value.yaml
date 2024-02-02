@@ -4,14 +4,22 @@ policies:
     comment: |
       Modify Application tag to all S3 Buckets with matching name
     filters:
-      - type: value
-        key: Name
-        op: contains
-        value: "bonita"
+      - or:
+        - type: value
+          key: Name
+          op: contains
+          value: "bonita"
+        - type: value
+          key: Name
+          op: contains
+          value: "Bonita"
     actions:
       - type: tag
         key: Application
         value: "Bonitasoft"
+      - type: tag
+        key: Portfolio
+        value: AiOps
       - type: notify
         template: default.html
         template_format: html
