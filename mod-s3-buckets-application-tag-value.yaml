@@ -6,8 +6,8 @@ policies:
     filters:
       - type: value
         key: Name
-        op: eq
-        value: "*bonita*"
+        op: contains
+        value: "bonita"
     actions:
       - type: tag
         key: Application
