@@ -1,0 +1,7 @@
+policies:
+  - name: set-ec2-custodian-downtime-tag-instances
+    resource: ec2
+    actions:
+      - type: tag
+        key: custodian_downtime
+        value: off=(M-F,18);on=(M-F,7);tz=et
