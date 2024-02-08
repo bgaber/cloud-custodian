@@ -1,0 +1,24 @@
+policies:
+  - name: ebs-gp3-volume-upgrade
+    resource: ebs
+    comment: |
+      Upgrade EBS Volume Type to gp3
+    filters:
+      - VolumeType: gp2
+      - modifyable
+    actions:
+      - type: modify
+        volume-type: gp3
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: '1'
+        violation_desc: "These EBS Volumes had their type upgraded to gp3:"
+        action_desc: |
+            "Actions Taken: The listed EBS Volumes had their Volume Type changed to gp3"
+        subject: "{{ account }} Upgraded Volume Type to gp3 of Some EBS Volumes Instances"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
