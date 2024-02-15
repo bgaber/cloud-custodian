@@ -24,7 +24,7 @@ policies:
         violation_desc: "These EC2 Instances are unused:"
         action_desc: |
             "Actions Taken:  None.
-              At this point we are just notifying you of the unused RDS databases."
+              At this point we are just notifying you of the unused EC2 instances."
         subject: "{{ account }} Unused EC2 Instances"
         to:
           - brian.gaber@compucom.com
