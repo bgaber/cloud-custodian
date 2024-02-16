@@ -1,0 +1,25 @@
+policies:
+  - name: replace-ema-ec2-instances-owner-tag
+    resource: ec2
+    description: |
+      Modify Owner tag of EC2 Instances associated with EMA
+    filters:
+      - "tag:Application": EMA
+    actions:
+      - type: tag
+        key: Owner
+        value: Trevor Kemp
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: 1
+        subject: "{{ account }} - Replaced EC2 Instances Owner Tag Value"
+        violation_desc: "These EC2 Instances have had their Owner tag changed"
+        action_desc: |
+            "These EC2 Instances have had their Owner tag changed to Trevor Kemp."
+        to:
+          - brian.gaber@compucom.com
+        transport:
+            type: sqs
+            queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+            region: us-east-1

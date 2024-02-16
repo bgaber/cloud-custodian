@@ -1,8 +1,8 @@
 policies:
-  - name: replace-ncm-ebs-volumes-owner-tag
-    resource: ebs
+  - name: replace-ncm-ec2-instances-owner-tag
+    resource: ec2
     description: |
-      Modify Owner tag of EBS Volumes associated with NCM
+      Modify Owner tag of EC2 Instances associated with NCM
     filters:
       - "tag:Application": NCM
     actions:
@@ -13,10 +13,10 @@ policies:
         template: default.html
         template_format: html
         priority_header: 1
-        subject: "{{ account }} - Replaced EBS Volumes Owner Tag Value"
-        violation_desc: "These Elastic Block Store (EBS) Volumes have had their Owner tag changed"
+        subject: "{{ account }} - Replaced EC2 Instances Owner Tag Value"
+        violation_desc: "These EC2 Instances have had their Owner tag changed"
         action_desc: |
-            "These Elastic Block Store (EBS) Volumes have had their Owner tag changed to Aaron Jackson."
+            "These EC2 Instances have had their Owner tag changed to Aaron Jackson."
         to:
           - brian.gaber@compucom.com
         transport:
