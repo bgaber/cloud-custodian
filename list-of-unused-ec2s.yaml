@@ -8,7 +8,7 @@ policies:
         key: LaunchTime
         op: greater-than
         value: 30
-        value-type: age
+        value_type: age
       - name: CPUUtilization
         type: metrics
         days: 14
