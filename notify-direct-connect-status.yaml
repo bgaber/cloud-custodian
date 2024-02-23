@@ -1,0 +1,25 @@
+policies:
+- name: notify-direct-connect-status
+  description: |
+    Direct Connect Status
+  resource: aws.directconnect
+  filters:
+    - type: value
+      key: "connections[].connectionState"
+      op: eq
+      value: "available"
+  actions:
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: 1
+        subject: "{{ account }} Direct Connect Status Is Available"
+        violation_desc: "Direct Connect Status:"
+        action_desc: |
+            "Actions Taken: Direct Connect Status"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+          region: us-east-1
