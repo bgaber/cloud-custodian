@@ -5,7 +5,7 @@ policies:
   resource: aws.directconnect
   filters:
     - type: value
-      key: "connections[].connectionState"
+      key: "connectionState"
       op: eq
       value: "available"
   actions:
