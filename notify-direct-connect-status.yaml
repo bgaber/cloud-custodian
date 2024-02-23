@@ -13,10 +13,10 @@ policies:
         template: default.html
         template_format: html
         priority_header: 1
-        subject: "{{ account }} Direct Connect Status Is Not Available"
-        violation_desc: "Direct Connect Status Not Available:"
+        subject: "{{ account }} Direct Connect Connection Problem"
+        violation_desc: "Direct Connect Connection State Is Not Available:"
         action_desc: |
-            "Actions Taken: Direct Connect Status Not Available"
+            "Actions Taken: Direct Connect Connection State Is Not Available"
         to:
           - brian.gaber@compucom.com
         transport:
