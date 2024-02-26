@@ -8,6 +8,7 @@ policies:
       events:
         - source: 'directconnect.amazonaws.com'
           event: ConnectionStateChange
+          ids: "requestParameters.connectionName"
     actions:
       - type: notify
         template: default.html
