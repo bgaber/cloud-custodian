@@ -1,0 +1,27 @@
+policies:
+  - name: set-glue-jobs-tag-values
+    resource: glue-job
+    comment: |
+      Set Application and Owner tag to all Glue Jobs
+    actions:
+      - type: tag
+        key: Owner
+        value: "Rajesh Sermadurai"
+      - type: tag
+        key: Application
+        value: "FSL-Salesforce"
+      - type: notify
+        template: default.html
+        template_format: html
+        priority_header: 1
+        subject: "{{ account }} Set Owner and Application Tag Value Of Some Glue Jobs"
+        violation_desc: "These Glue Jobs had their Owner and Application tag value set:"
+        action_desc: |
+            "Actions Taken: The listed Glue Jobs had their Owner and Application tag value set"
+        to:
+          - brian.gaber@compucom.com
+        transport:
+          type: sqs
+          queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
+          region: us-east-1
+
