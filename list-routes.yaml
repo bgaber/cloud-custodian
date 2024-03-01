@@ -1,0 +1,16 @@
+policies:
+- name: list-routes
+  resource: aws.route-table
+  description: |
+      Find all routes
+  actions:
+    - type: notify
+      template: default.html
+      template_format: html
+      priority_header: '1'
+      subject: "{{ account }} Route Tables"
+      to:
+        - brian.gaber@compucom.com
+      transport:
+        type: sqs
+        queue: https://sqs.us-east-1.amazonaws.com/472510080448/cloud-custodian
