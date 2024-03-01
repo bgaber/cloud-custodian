@@ -5,9 +5,9 @@ policies:
       Find all routes
   filters:
     - type: route
-      key: State
+      key: DestinationCidrBlock
       op: eq
-      value: active
+      value: "161.108.175.0/26"
   actions:
     - type: notify
       template: default.html
