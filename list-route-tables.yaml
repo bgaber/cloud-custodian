@@ -1,19 +1,14 @@
 policies:
-- name: list-routes
+- name: list-route-tabes
   resource: aws.route-table
   description: |
-      Find all routes
-  filters:
-    - type: route
-      key: State
-      op: eq
-      value: Active
+      Find all route tables
   actions:
     - type: notify
       template: default.html
       template_format: html
       priority_header: '1'
-      subject: "{{ account }} Routes"
+      subject: "{{ account }} Route Tables"
       to:
         - brian.gaber@compucom.com
       transport:
