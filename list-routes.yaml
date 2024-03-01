@@ -7,7 +7,7 @@ policies:
     - type: route
       key: DestinationCidrBlock
       op: eq
-      value: "161.108.175.0/26"
+      value: 161.108.175.0/26
   actions:
     - type: notify
       template: default.html
