@@ -7,7 +7,7 @@ policies:
     - type: route
       key: State
       op: eq
-      value: Active
+      value: active
   actions:
     - type: notify
       template: default.html
